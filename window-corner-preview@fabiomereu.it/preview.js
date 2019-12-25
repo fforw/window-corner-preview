@@ -379,8 +379,9 @@ var WindowCornerPreview = new Lang.Class({
 	// TODO: review for proper 3.34 fix
         // let windowTexture = mutw.get_texture();
         // let [windowWidth, windowHeight] = windowTexture.get_size();
-	let windowWidth = 500;
-	let windowHeight = 350;
+        let rectMonitor = Main.layoutManager.getWorkAreaForMonitor(DisplayWrapper.getScreen().get_current_monitor());
+	let windowWidth = rectMonitor.width * 0.75;
+	let windowHeight = rectMonitor.height * 0.75;
 
         /* To crop the window texture, for now I've found that:
            1. Using a clip rect on Clutter.clone will hide the outside portion but also will KEEP the space along it
@@ -414,7 +415,6 @@ var WindowCornerPreview = new Lang.Class({
 
         // To mantain a similar thumbnail size whenever the user selects a different window to preview,
         // instead of zooming out based on the window size itself, it takes the window screen as a standard unit (= 100%)
-        let rectMonitor = Main.layoutManager.getWorkAreaForMonitor(DisplayWrapper.getScreen().get_current_monitor());
         let targetRatio = rectMonitor.width * this.zoom / windowWidth;
 
         // No magnification allowed (KNOWN ISSUE: there's no height control if used, it still needs optimizing)
